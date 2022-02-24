@@ -1,4 +1,4 @@
-# CampMinder-Exercise
+# Azure n-tier application design for DevOps position at CampMinder.
 
 ### Following the requirements in the given exercise of architecting the n-tier application, I made a decision to use an approach shown on the diagram.
 
