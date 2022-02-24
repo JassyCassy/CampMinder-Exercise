@@ -26,3 +26,28 @@ To minimize operational overhead, the entire infrastructure was deployed using t
 
 As a monitoring solution, I chose to deploy Prometheus and Grafana with an Alert manager in AKS, which give me the flexibility to scrap custom metrics from all Cluster objects and send them to Grafana dashboards with an option of creating custom alerts, which will notify me and the team about any issues.
 For the logging solution, I chose Splunk, which supports logs injection from any part of the infrastructure and gives visibility on internal processes, and helps with debugging my app and infrastructure.
+
+
+In order to deploy my application on infrastructure in the diagram, I chose an approach of mono repo, in which developers will commit their code to Git repo. 
+Once code is pushed to the repository, the trigger is sent via webhook to Azure DevOps and starts the pipeline process. 
+Azure DevOps will checkout to relevant branch, pull the code, and perform all necessary tests, if all tests were successful, it will build the image, apply the last commit hash as a tag, and push this image to the container registry. 
+
+At this moment, depending on the branch that triggered a pipeline, dev, staging, or prod, our app and JS front end will be deployed to AKS  and Azure Blob, using Ansible.
+
+Pros:
+- Since we have used Terraform, this infrastructure could be easily deployed to any region, for any environment, and cloud provider.
+- If applying this design for the dev environment, we can use spot VM as a node group for our AKS to reduce the cost.
+- Fault-tolerant and highly available, all components are spanning across multiple AZ’s, with autoscaling and standby DB with read replicas in a private subnet. 
+- The frontend is served from CDN, which reduces latency, provides caching, and is stored in highly available Azure Blob with versioning. 
+- All traffic is secured with SSL certificates. 
+- Meets Azure target SLA. 
+- Automated CI/CD with Ansible and Azure DevOps including test steps in the CI process. 
+
+Cons: 
+- Will require some time to develop and bring under IaaC management.
+- Standby MySql instance not in the separate region to achieve even more resiliency.
+- Prometheus and Splunk have steep learning and implementation curve in order to get all custom metrics and logs needed.
+
+
+### I really enjoyed this exercise and I hope you will enjoy it too while reading through this. 
+### Please let me know if you have any questions or feedback. 
