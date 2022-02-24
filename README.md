@@ -49,5 +49,5 @@ Cons:
 - Prometheus and Splunk have steep learning and implementation curve in order to get all custom metrics and logs needed.
 
 
-### I really enjoyed this exercise and I hope you will enjoy it too while reading through this. 
-### Please let me know if you have any questions or feedback. 
+#### I really enjoyed this exercise and I hope you will enjoy it too while reading through this. 
+#### Please let me know if you have any questions or feedback. 
